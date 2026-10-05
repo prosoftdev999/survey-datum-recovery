@@ -1,0 +1,9 @@
+For each directed link, first express the total relative displacement of to_point minus from_point in the recovered link basis: x = [along, cross]^T.
+
+For the active head record, let phi be axis_rotation_deg in radians. Before wrapping,
+a = axis_a_sign * (cos(phi)*along + sin(phi)*cross)
+b = axis_b_sign * (-sin(phi)*along + cos(phi)*cross)
+
+Component a is wrapped with period_a_m and component b with period_b_m. The half-open wrap interval is [-period/2, period/2).
+
+A head record is active when valid_from_day <= elapsed_day < valid_to_day.

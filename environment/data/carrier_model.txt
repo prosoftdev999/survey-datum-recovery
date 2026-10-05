@@ -1,0 +1,17 @@
+The final archive is from the low-coherence carrier campaign. The phase logger kept fractional phase and the continuous lock identifier, but its integer cycle origin was not exported. One integer origin belongs to each arc in `carrier_arcs.csv` and stays constant for every row of that arc.
+
+The target tags in `carrier_arcs.csv` were temporary field labels, not monitoring-point IDs. The two commissioning distances in `carrier_target_checks.csv` were measured before the carrier loading sequence. A one-to-one assignment of the six target tags to the six deliverable points is admissible only when every commissioning distance agrees with the recovered site coordinates within three listed standard deviations. No other identity convention was preserved.
+
+The six monitoring coordinates use the same unweighted site centroid as the preceding deformation work. Let q_p be a point coordinate relative to that centroid and let L be `load_index` from `carrier_epochs.csv`. The displacement increment after the trend campaign is
+
+    delta_p(L) = f1(L) c1 + f2(L) c2 + (f1(L) H1 + f2(L) H2) q_p
+
+with f1(L)=L and f2(L)=L*(L-0.55). c1 and c2 are 2-vectors; H1 and H2 are 2x2 matrices. There is no constant term.
+
+For a phase row, take the line-of-sight vector u from `carrier_geometry.csv` and wavelength lambda from `carrier_arcs.csv`. If N_a is the integer cycle origin for that arc, the observation equation in metres is
+
+    lambda * phase_cycles = u dot delta_p(L) + lambda * N_a + error.
+
+Use every carrier phase row and every row in `carrier_datum.csv`. Datum rows use the point weights in `datum_weights.csv` and constrain the weighted mean of delta_p(L). All listed sigmas are one-standard-deviation values; fit continuous coefficients by inverse-variance least squares.
+
+For each admissible target assignment, the carrier score is the weighted residual sum of squares from the phase and datum rows after refitting all continuous coefficients. The fixed solution is the target assignment and integer ambiguity vector with the smallest carrier score. The runner-up is the distinct joint assignment with the next-smallest carrier score. The commissioning checks are identity gates and are not added to the carrier score.

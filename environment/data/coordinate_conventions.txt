@@ -1,0 +1,3 @@
+Site frame: east_m increases east; north_m increases north.
+Axis codes: uv => canonical=(u,v); v_neg_u => canonical=(v,-u).
+Intervals are valid_from inclusive and valid_to exclusive.

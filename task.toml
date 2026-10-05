@@ -1,0 +1,30 @@
+artifacts = ["/app/output.json"]
+
+[task]
+name = "afterquery/survey-datum-recovery"
+
+[metadata]
+author_name = "Thomas Morison"
+author_email = "matiasv931026@gmail.com"
+difficulty_explanation = "This version is one continuous two-stage handoff rather than a stack of unrelated reductions. The first stage combines a 6! temporary-target assignment with an 18-dimensional correlated integer ambiguity problem. Independent rounding changes five ambiguity integers and raises the refitted weighted sum from 37.76500166 to 52.53540456; taking the first commissioning-compatible target map gives 166.48863455. The carrier result then becomes the control geometry for the closing resection, so an error in the first stage propagates into the second. The closing archive contains 14 thermometer checks, 218 sequential circle-reference observations, 20 range-reference observations, and 48 field observations. Circle correction depends on reversal history, and the lost handoff also contains an opposite-sense crosswalk and a one-to-one six-target assignment. The correct closing solution has 0.00174649 m Cartesian RMS, while restarting reversal memory on every row gives 0.01918850 m, using wrapped circle values as motion state gives 0.03501997 m, and reversing the sense crosswalk leaves a 19.42339 m best closure after remapping. The data are synthetic but model a realistic survey-calibration and low-coherence ranging handoff. A numerical geodesist or scientific-computing engineer with Python experience should need roughly 3-5 focused hours to reconstruct, validate, and independently check the two coupled inverse problems."
+solution_explanation = "The reference starts from the accepted control handoff. It evaluates the carrier target assignments that are compatible with the commissioning checks, forms the joint weighted model for continuous deformation coefficients and the 18 cycle origins, solves the correlated integer problem, and refits the best two distinct candidates. The winning carrier solution supplies the final monument positions for the closing resection. The closing reduction calibrates the two thermometers, replays the sequential circle references with their carried reversal state, compares the archived circle and range models, applies the selected corrections to both setups, and evaluates the two sense conventions and all one-to-one target assignments with refitted proper rigid transforms. The minimum joint Cartesian closure is reported together with the next distinct closure."
+verification_explanation = "The verifier only parses /app/output.json and never executes or imports agent-produced code. Carrier epoch ID, both target maps, all 18 fixed and runner-up ambiguities, closing model codes, circle-sense crosswalk, and closing target assignment are exact semantic checks. Carrier weighted sums and gap use ±0.05; independent integer rounding increases the fixed score by 14.77040290 and the first commissioning-compatible wrong target mapping increases it by 128.72363289, so those alternatives remain far outside the accepted result even after continuous refitting. Carrier total displacement components use ±0.022 m; because both mapping and all ambiguity integers are already exact checks, this band only accommodates equivalent continuous least-squares implementations. For closing calibration, C52 scores 183.47442679 while the next circle model scores 625.02536002, so the ±0.75 band is far smaller than the 441.55093323 model separation. D41 scores 14.68043270 while the next range model scores 116.76806907, so ±0.30 is far smaller than the 102.08763638 separation. Closing setup position, orientation, setup RMS, interstation baseline, azimuth, accepted closure, and runner-up closure use ±0.010 m, ±0.00012 rad, ±0.0010 m, ±0.015 m, ±0.00012 rad, ±0.0010 m, and ±0.050 m respectively. The accepted two-setup closure is 0.0017464947 m; restarting reversal memory gives 0.0191885011 m, using wrapped rather than continuity-unwrapped circle state gives 0.0350199674 m, and reversing the sense crosswalk gives a best remapped closure of 19.42338858 m. Setup orientations and interstation azimuth are compared by shortest wrapped angular distance modulo 2*pi, so equivalent [0, 2*pi) and (-pi, pi] representations are accepted. Missing, malformed, incomplete, nonnumeric, and wrong-but-well-formed artifacts return binary 0; harmless JSON key ordering and ordinary numeric serialization differences remain accepted."
+category = "Science"
+subcategory = "Math"
+tags = ["survey-adjustment", "phase-ranging", "integer-least-squares", "resection"]
+expert_time_estimate_hours = 4.0
+relevant_experience = "I am a senior AI and software engineer with more than ten years of engineering experience. My work includes numerical optimization, scientific data reconciliation, reproducible Python tooling, and validation of computation pipelines, which are the core implementation skills used to build and check this task."
+
+[verifier]
+environment_mode = "separate"
+timeout_sec = 120
+
+[agent]
+timeout_sec = 7200
+
+[environment]
+build_timeout_sec = 600
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+gpus = 0

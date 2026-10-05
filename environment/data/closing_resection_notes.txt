@@ -1,0 +1,26 @@
+Closing resection handoff
+
+The occupied coordinates in the last carrier shift were never reduced. The six physical targets are the carrier-final monument positions: the recovered site coordinates plus the final total carrier displacements. The temporary X-tags in closing_resection.csv are shared by both setups and form one one-to-one assignment to those six monuments.
+
+Temperature channels L4 and L9 must first be reduced from thermometer_checks.csv with one affine calibration per logger.
+
+The circle archive is sequential. raw_circle_rad is modulo 2*pi. Successive physical circle moves are always less than pi radians, so continuity gives the unwrapped recorder angle. circle_state_seeds.csv gives the recorder state immediately before the first row of each sequence. Direction is the sign of the unwrapped circle increment. Travel is accumulated absolute circle motion while direction is unchanged and resets to the first increment after a reversal.
+
+The old circle reducer had five candidate sheets, listed in circle_models.csv. Every sheet uses
+  base = z + kT*(T-20) + hs*sin(raw) + hc*cos(raw).
+The correction added to the unwrapped recorder circle is:
+  none:                 base
+  direction:            base + d*b
+  linear_travel:        base + d*(b + r*travel)
+  exponential:          base + d*(b + r*exp(-travel/tau))
+  rational:             base + d*(b + r/(1 + travel/tau)).
+For exponential and rational sheets, 0.04 < tau < 0.55 rad. Fit each sheet to all angle_reference.csv rows using the listed one-sigma values and retain the sheet with the smallest weighted residual sum after refitting its continuous coefficients.
+
+The range reducer likewise has the candidate forms in range_models.csv. The correction added to raw_range_m is one of:
+  constant:              b
+  temperature:           b + kT*(T-20)
+  ppm_temperature:       b + kT*(T-20) + ppm*raw_range_m*1e-6
+  quadratic_temperature: b + kT*(T-20) + k2*(T-20)^2.
+Use the same weighted-residual rule on range_reference.csv.
+
+The two circle_sense_code values in setup_register.csv have opposite senses; the lost crosswalk is which is +1 and which is -1. After circle and range reduction, a setup observation represents a local polar vector with east-like component range*sin(sense*circle) and north-like component range*cos(sense*circle). Each setup is related to the carrier-final target coordinates by a proper 2-D rigid transform only. Use all closing observations jointly. The accepted handoff is the one-to-one target assignment and sense crosswalk with the smallest total Cartesian closure after separately fitting the two proper rigid transforms.

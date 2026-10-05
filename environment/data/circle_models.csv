@@ -1,0 +1,6 @@
+model_code,memory_form
+C11,none
+C24,direction
+C37,linear_travel
+C52,exponential
+C68,rational

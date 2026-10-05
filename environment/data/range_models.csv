@@ -1,0 +1,5 @@
+model_code,form
+D03,constant
+D17,temperature
+D41,ppm_temperature
+D66,quadratic_temperature

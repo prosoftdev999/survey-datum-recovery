@@ -1,0 +1,3 @@
+Each monitoring-point displacement component lies within [-0.020, 0.020] m.
+Wrapped link components use the half-open interval [-period/2, period/2).
+For a directed link, the along axis points from from_point to to_point in the recovered site frame; the cross axis is the along axis rotated 90 degrees counter-clockwise.

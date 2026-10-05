@@ -1,0 +1,11 @@
+The trend campaign reports total displacement relative to the original site frame.
+
+Let q_p be the recovered site coordinate of point p, centered at the unweighted centroid of the six deliverable points, in metres. If d0_p is the point displacement recovered from relative_motion.csv, then at elapsed day t the campaign model is
+
+d_p(t) = d0_p + t*c1 + t^2*c2 + (t*H1 + t^2*H2) q_p.
+
+c1 and c2 are 2-vectors. H1 and H2 are 2x2 matrices. The constant terms are zero because d0_p is the t=0 field.
+
+Over the archived interval each component of d_p(t)-d0_p lies within [-0.030, 0.030] m. Each entry of H1 lies within [-0.000015, 0.000015] per day, and each entry of H2 lies within [-0.00000060, 0.00000060] per day^2.
+
+trend_datum.csv records the same weighted mean convention as datum_weights.csv, but for total displacement at its listed epochs.
